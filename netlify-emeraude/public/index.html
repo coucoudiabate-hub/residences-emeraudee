@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Les Résidences d'Émeraude Chez Bodoro — Hôtel 4 étoiles à Yamoussoukro, Côte d'Ivoire.">
+  <title>Les Résidences d'Émeraude Chez Bodoro</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3009/3009712.png">
+</head>
+<body>
+
+<!-- ═══════ LOADER ═══════ -->
+<div class="page-loader" id="page-loader">
+  <div class="loader-content">
+    <div class="loader-spinner"></div>
+    <p>Bienvenue</p>
+  </div>
+</div>
+
+<!-- ═══════ NAVBAR ═══════ -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="/" class="logo">
+      <img src="" alt="Logo" class="logo-img" id="site-logo">
+      <div class="logo-text">
+        <span class="logo-title" id="nav-hotel-name">Résidences d'Émeraude</span>
+        <span class="logo-subtitle">Chez Bodoro</span>
+      </div>
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#accueil">Accueil</a></li>
+      <li><a href="#about">À Propos</a></li>
+      <li><a href="#chambres">Chambres</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#gallery">Galerie</a></li>
+      <li><a href="#temoignages">Avis</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="/admin" class="admin-link">🔐 Admin</a></li>
+    </ul>
+    <div class="mobile-menu" id="mobile-menu">☰</div>
+  </div>
+</nav>
+
+<!-- ═══════ HERO ═══════ -->
+<!-- hero-image mis à jour dynamiquement via JS depuis les settings admin -->
+<section id="accueil" class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">★ Hôtel 4 Étoiles — Yamoussoukro</div>
+    <h1 class="hero-title" id="hero-title">Les Résidences d'Émeraude</h1>
+    <span class="hero-subtitle" id="hero-subtitle">Chez Bodoro</span>
+    <p class="hero-tagline" id="hero-tagline">L'élégance et le confort au cœur de la ville</p>
+    <div class="hero-actions">
+      <a href="#chambres" class="btn btn-primary">Découvrir nos chambres →</a>
+      <a href="#contact" class="btn btn-secondary">Nous contacter</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>↓</span>
+    Découvrir
+  </div>
+</section>
+
+<!-- ═══════ ABOUT ═══════ -->
+<section id="about" class="about-section">
+  <div class="about-container reveal">
+    <div class="about-content">
+      <h2>Bienvenue Chez Bodoro</h2>
+      <p id="about-description">Situées au cœur de Yamoussoukro, les Résidences d'Émeraude Chez Bodoro vous offrent un cadre exceptionnel alliant luxe, confort et authenticité.</p>
+      <p>Nos équipes dévouées sont à votre disposition 24h/24 pour faire de votre séjour un moment inoubliable. Que vous soyez en voyage d'affaires ou en vacances, chaque détail a été pensé pour vous.</p>
+      <div class="about-stats">
+        <div class="about-stat">
+          <div class="about-stat-number" id="stat-chambres" data-count="4">4</div>
+          <div class="about-stat-label">Chambres & Suites</div>
+        </div>
+        <div class="about-stat">
+          <div class="about-stat-number" data-count="500">500</div>
+          <div class="about-stat-label">Clients Satisfaits</div>
+        </div>
+        <div class="about-stat">
+          <div class="about-stat-number">24/7</div>
+          <div class="about-stat-label">Service Concierge</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-image">
+      <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800" alt="Résidences d'Émeraude" id="about-img" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ CHAMBRES ═══════ -->
+<section id="chambres" class="section reveal">
+  <h2 class="section-title">Nos Chambres &amp; Suites</h2>
+  <p class="section-subtitle">Des espaces conçus pour votre bien-être et votre confort</p>
+  <div class="section-divider"></div>
+
+  <!-- Filtres dynamiques -->
+  <div class="room-filters">
+    <button class="room-filter-btn active" data-filter="all">Toutes</button>
+    <button class="room-filter-btn" data-filter="available">Disponibles</button>
+    <button class="room-filter-btn" data-filter="Suite">Suites</button>
+    <button class="room-filter-btn" data-filter="Deluxe">Deluxe</button>
+    <button class="room-filter-btn" data-filter="Standard">Standard</button>
+    <button class="room-filter-btn" data-filter="Studio">Studios</button>
+  </div>
+
+  <div class="rooms-grid" id="rooms-grid">
+    <div style="grid-column:1/-1;text-align:center;padding:4rem;color:#aaa;">
+      <div class="loader-spinner" style="margin:0 auto 1rem;border-top-color:var(--emerald);"></div>
+      Chargement des chambres...
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ SERVICES ═══════ -->
+<section id="services" class="services-section reveal">
+  <h2 class="section-title">Services Additionnels</h2>
+  <p class="section-subtitle">Pour enrichir votre expérience de séjour</p>
+  <div class="section-divider"></div>
+  <div class="services-grid" id="services-grid"></div>
+</section>
+
+<!-- ═══════ COMMODITÉS ═══════ -->
+<section id="commodites" class="section reveal" style="background:var(--white);padding-block:6rem;">
+  <h2 class="section-title">Nos Commodités</h2>
+  <p class="section-subtitle">Tout pour un séjour parfait, inclus dans votre réservation</p>
+  <div class="section-divider"></div>
+  <div class="amenities-grid" id="amenities-grid"></div>
+</section>
+
+<!-- ═══════ GALERIE ═══════ -->
+<section id="gallery" class="gallery-section reveal">
+  <h2 class="section-title">Notre Galerie</h2>
+  <p class="section-subtitle">Découvrez les espaces et l'atmosphère de la résidence</p>
+  <div class="section-divider"></div>
+  <div id="gallery-filters" class="gallery-filters"></div>
+  <div class="gallery-grid" id="gallery-grid"></div>
+</section>
+
+<!-- ═══════ TÉMOIGNAGES ═══════ -->
+<section id="temoignages" class="section reveal">
+  <h2 class="section-title">Témoignages</h2>
+  <p class="section-subtitle">Ce que nos hôtes disent de leur expérience</p>
+  <div class="section-divider"></div>
+  <div class="testimonials-grid" id="testimonials-grid"></div>
+</section>
+
+<!-- ═══════ CONTACT ═══════ -->
+<section id="contact" class="section reveal" style="background:var(--white);padding-block:6rem;">
+  <h2 class="section-title">Contactez-nous</h2>
+  <p class="section-subtitle">Notre équipe est à votre disposition 24h/24</p>
+  <div class="section-divider"></div>
+  <div class="contact-container">
+    <div class="contact-info">
+      <div class="info-block">
+        <h3>📍 Adresse</h3>
+        <p id="contact-address">Yamoussoukro, Quartier Bellevue<br>500m après Carrefour Chèck Cissé</p>
+      </div>
+      <div class="info-block">
+        <h3>📞 Téléphone</h3>
+        <p><a href="tel:+2250747048311" id="phone1-link"><span id="contact-phone1">07 47 04 83 11</span></a></p>
+        <p><a href="tel:+2250576767635" id="phone2-link"><span id="contact-phone2">05 76 76 76 35</span></a></p>
+      </div>
+      <div class="info-block">
+        <h3>✉️ Email</h3>
+        <p id="contact-email">contact@residences-emeraude.ci</p>
+      </div>
+      <div class="info-block">
+        <h3>🕐 Horaires</h3>
+        <p>Check-in : <strong id="contact-checkin">14:00</strong></p>
+        <p>Check-out : <strong id="contact-checkout">12:00</strong></p>
+      </div>
+    </div>
+    <form class="contact-form" id="contact-form">
+      <div class="form-group">
+        <label>Nom complet</label>
+        <input type="text" id="contact-name" required placeholder="Votre nom complet">
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="contact-email-input" required placeholder="votre@email.com">
+      </div>
+      <div class="form-group">
+        <label>Sujet</label>
+        <input type="text" id="contact-subject" placeholder="Objet de votre message">
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea id="contact-message" required placeholder="Décrivez votre demande..."></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">
+        Envoyer le message →
+      </button>
+    </form>
+  </div>
+
+  <div class="contact-info-box">
+    <h3>✦ Retrouvez-nous sur Maps &amp; Yango ✦</h3>
+    <div class="contact-info-grid">
+      <div class="contact-info-item">
+        <span>📍</span>
+        <span>Yamoussoukro, Quartier Bellevue</span>
+      </div>
+      <div class="contact-info-item">
+        <span>🚕</span>
+        <span>Commandez Yango : <strong>Yamoussoukro</strong></span>
+      </div>
+      <div class="contact-info-item">
+        <span>📞</span>
+        <a href="tel:+2250747048311">07 47 04 83 11</a>
+      </div>
+      <div class="contact-info-item">
+        <span>📞</span>
+        <a href="tel:+2250576767635">05 76 76 76 35</a>
+      </div>
+    </div>
+    <a href="https://maps.google.com/?q=Yamoussoukro+Quartier+Bellevue" class="maps-btn" target="_blank" id="maps-link">
+      🗺️ Voir sur Google Maps
+    </a>
+  </div>
+</section>
+
+<!-- ═══════ NEWSLETTER ═══════ -->
+<section class="newsletter-section reveal">
+  <div class="newsletter-box">
+    <h3>📧 Rejoignez notre newsletter</h3>
+    <p>Recevez nos offres exclusives et actualités directement dans votre boîte mail.</p>
+    <form class="newsletter-form" id="newsletter-form">
+      <input type="email" id="newsletter-email" placeholder="Votre adresse email" required>
+      <button type="submit">S'inscrire</button>
+    </form>
+  </div>
+</section>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer class="footer-rich">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo-title">💎 Résidences d'Émeraude</div>
+      <p id="footer-desc">L'élégance et le confort au cœur de Yamoussoukro. Une expérience hôtelière d'exception où chaque détail compte.</p>
+      <div class="footer-social">
+        <a href="#" id="social-fb" target="_blank" title="Facebook">f</a>
+        <a href="#" id="social-ig" target="_blank" title="Instagram">📷</a>
+        <a href="#" id="social-maps" target="_blank" title="Google Maps">📍</a>
+      </div>
+    </div>
+    <div class="footer-links">
+      <h4>Navigation</h4>
+      <ul>
+        <li><a href="#accueil">Accueil</a></li>
+        <li><a href="#about">À Propos</a></li>
+        <li><a href="#chambres">Chambres</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#gallery">Galerie</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>Légal</h4>
+      <ul>
+        <li><a href="#">Mentions légales</a></li>
+        <li><a href="#">Confidentialité</a></li>
+        <li><a href="#">CGV</a></li>
+      </ul>
+    </div>
+    <div class="footer-links footer-contact">
+      <h4>Contact</h4>
+      <p id="footer-address">📍 Yamoussoukro, Quartier Bellevue</p>
+      <p id="footer-phone">📞 07 47 04 83 11</p>
+      <p id="footer-email">✉️ contact@residences-emeraude.ci</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Les Résidences d'Émeraude Chez Bodoro. Tous droits réservés. — Développé par <strong style="color:var(--gold)">KING SERVICE</strong></p>
+  </div>
+</footer>
+
+<!-- ═══════ WHATSAPP ═══════ -->
+<a href="https://wa.me/2250712345678" class="whatsapp-float" id="whatsapp-btn" target="_blank" title="Contactez-nous sur WhatsApp">💬</a>
+
+<!-- ═══════ MODAL RÉSERVATION ═══════ -->
+<div class="modal-overlay" id="reservation-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title">🗓️ Réserver : <span id="res-room-name"></span></h3>
+      <button class="modal-close" onclick="closeReservationModal()">×</button>
+    </div>
+    <form id="reservation-form">
+      <input type="hidden" id="res-room-id">
+      <input type="hidden" id="res-room-price">
+      <div class="price-display">
+        <p>Tarif : <strong id="res-price-display">–</strong></p>
+      </div>
+      <div class="form-group">
+        <label>Nom complet *</label>
+        <input type="text" id="res-name" required placeholder="Prénom et Nom">
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="res-email" placeholder="votre@email.com">
+      </div>
+      <div class="form-group">
+        <label>Téléphone *</label>
+        <input type="tel" id="res-phone" required placeholder="+225 07 XX XX XX XX">
+      </div>
+      <div class="dates-grid">
+        <div class="form-group">
+          <label>Arrivée *</label>
+          <input type="date" id="res-checkin" required>
+        </div>
+        <div class="form-group">
+          <label>Départ *</label>
+          <input type="date" id="res-checkout" required>
+        </div>
+      </div>
+      <div class="price-display">
+        <p>Nuits : <strong id="res-nights">0</strong></p>
+        <p>Total estimé : <span class="total-price" id="res-total">–</span></p>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">
+        ✓ Confirmer la réservation
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- ═══════ LIGHTBOX ═══════ -->
+<div class="lightbox-overlay" id="lightbox">
+  <button class="lightbox-close" onclick="closeLightbox()">×</button>
+  <button class="lightbox-nav lightbox-prev" onclick="changeLightboxImage(-1)">‹</button>
+  <img src="" alt="" class="lightbox-img" id="lightbox-img">
+  <button class="lightbox-nav lightbox-next" onclick="changeLightboxImage(1)">›</button>
+  <div class="lightbox-counter" id="lightbox-counter">1 / 1</div>
+</div>
+
+<script src="/js/main.js"></script>
+</body>
+</html>

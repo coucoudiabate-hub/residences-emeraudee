@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Admin — Résidences d'Émeraude</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3009/3009712.png">
+</head>
+<body class="admin-body">
+
+<!-- ════════════════ LOGIN ════════════════ -->
+<div id="login-page">
+    <div class="login-container">
+        <div class="login-box">
+            <div class="login-brand">
+                <img src="https://cdn-icons-png.flaticon.com/512/3009/3009712.png" class="logo-login" id="login-logo" alt="Logo">
+                <h2>Administration</h2>
+                <p class="login-subtitle">Résidences d'Émeraude Chez Bodoro</p>
+            </div>
+            <form id="login-form">
+                <div class="form-group">
+                    <label>👤 Nom d'utilisateur</label>
+                    <input type="text" id="username" required placeholder="admin" autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label>🔒 Mot de passe</label>
+                    <input type="password" id="password" required placeholder="••••••••" autocomplete="current-password">
+                </div>
+                <div id="login-error" class="login-error hidden"></div>
+                <button type="submit" class="btn btn-primary login-btn">
+                    <span id="login-text">Se connecter</span>
+                    <span id="login-spinner" class="hidden">⟳</span>
+                </button>
+            </form>
+            <div class="login-footer"><a href="/">← Retour au site</a></div>
+        </div>
+    </div>
+</div>
+
+<!-- ════════════════ DASHBOARD ════════════════ -->
+<div id="admin-dashboard" class="hidden">
+
+    <!-- Overlay mobile sidebar -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <!-- Sidebar -->
+    <aside class="admin-sidebar" id="admin-sidebar">
+        <div class="sidebar-header">
+            <img src="" alt="Logo" class="sidebar-logo" id="sidebar-logo">
+            <div class="sidebar-brand">
+                <span class="sidebar-title">Résidences d'Émeraude</span>
+                <span class="sidebar-subtitle">Panel Admin</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#" class="sidebar-link active" data-section="stats">
+                <span class="sidebar-icon">📊</span><span>Tableau de bord</span>
+            </a>
+            <a href="#" class="sidebar-link" data-section="settings">
+                <span class="sidebar-icon">⚙️</span><span>Paramètres</span>
+            </a>
+            <a href="#" class="sidebar-link" data-section="rooms">
+                <span class="sidebar-icon">🏨</span><span>Chambres</span>
+                <span class="sidebar-badge hidden" id="badge-rooms">0</span>
+            </a>
+            <a href="#" class="sidebar-link" data-section="reservations">
+                <span class="sidebar-icon">📋</span><span>Réservations</span>
+                <span class="sidebar-badge hidden" id="badge-reservations">0</span>
+            </a>
+            <a href="#" class="sidebar-link" data-section="gallery">
+                <span class="sidebar-icon">🖼️</span><span>Galerie</span>
+            </a>
+            <a href="#" class="sidebar-link" data-section="services">
+                <span class="sidebar-icon">🛎️</span><span>Services</span>
+            </a>
+            <a href="#" class="sidebar-link" data-section="amenities">
+                <span class="sidebar-icon">✨</span><span>Commodités</span>
+            </a>
+            <a href="#" class="sidebar-link" data-section="testimonials">
+                <span class="sidebar-icon">⭐</span><span>Témoignages</span>
+            </a>
+            <a href="#" class="sidebar-link" data-section="contacts">
+                <span class="sidebar-icon">📨</span><span>Messages</span>
+                <span class="sidebar-badge hidden" id="badge-contacts">0</span>
+            </a>
+            <a href="#" class="sidebar-link" data-section="newsletter">
+                <span class="sidebar-icon">📧</span><span>Newsletter</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="/" class="sidebar-link" target="_blank" rel="noopener">
+                <span class="sidebar-icon">🌐</span><span>Voir le site</span>
+            </a>
+            <button class="sidebar-link logout-btn" id="logout-btn">
+                <span class="sidebar-icon">🚪</span><span>Déconnexion</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="admin-main">
+        <header class="admin-topbar">
+            <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Menu">☰</button>
+            <div class="topbar-title" id="topbar-title">Tableau de bord</div>
+            <div class="topbar-right">
+                <span class="user-badge">🔐 Admin</span>
+            </div>
+        </header>
+
+        <div class="admin-content">
+
+            <!-- ──── STATS ──── -->
+            <section id="section-stats" class="admin-section-page active">
+                <h2 class="section-page-title">📊 Tableau de bord</h2>
+                <div class="stats-grid">
+                    <div class="stat-card stat-emerald"><div class="stat-icon">🏨</div><div class="stat-info"><div class="stat-value" id="stat-rooms">–</div><div class="stat-label">Chambres</div></div></div>
+                    <div class="stat-card stat-green"><div class="stat-icon">✅</div><div class="stat-info"><div class="stat-value" id="stat-available">–</div><div class="stat-label">Disponibles</div></div></div>
+                    <div class="stat-card stat-gold"><div class="stat-icon">📋</div><div class="stat-info"><div class="stat-value" id="stat-reservations">–</div><div class="stat-label">Réservations</div></div></div>
+                    <div class="stat-card stat-orange"><div class="stat-icon">⏳</div><div class="stat-info"><div class="stat-value" id="stat-pending">–</div><div class="stat-label">En attente</div></div></div>
+                    <div class="stat-card stat-blue"><div class="stat-icon">📨</div><div class="stat-info"><div class="stat-value" id="stat-contacts">–</div><div class="stat-label">Messages</div></div></div>
+                    <div class="stat-card stat-purple"><div class="stat-icon">📧</div><div class="stat-info"><div class="stat-value" id="stat-newsletter">–</div><div class="stat-label">Abonnés</div></div></div>
+                </div>
+                <div class="quick-actions">
+                    <h3>Actions rapides</h3>
+                    <div class="quick-actions-grid">
+                        <button class="quick-action-btn" onclick="showSection('rooms'); setTimeout(openRoomModal,200)">
+                            <span class="quick-action-icon">➕</span><span>Nouvelle chambre</span>
+                        </button>
+                        <button class="quick-action-btn" onclick="showSection('gallery'); setTimeout(()=>document.getElementById('gallery-upload-zone').scrollIntoView({behavior:'smooth'}),200)">
+                            <span class="quick-action-icon">🖼️</span><span>Ajouter photo</span>
+                        </button>
+                        <button class="quick-action-btn" onclick="showSection('reservations')">
+                            <span class="quick-action-icon">📋</span><span>Voir réservations</span>
+                        </button>
+                        <button class="quick-action-btn" onclick="showSection('contacts')">
+                            <span class="quick-action-icon">📨</span><span>Voir messages</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ──── SETTINGS ──── -->
+            <section id="section-settings" class="admin-section-page">
+                <h2 class="section-page-title">⚙️ Paramètres</h2>
+                <div class="settings-tabs">
+                    <button class="settings-tab active" data-tab="general">Général</button>
+                    <button class="settings-tab" data-tab="contact">Contact</button>
+                    <button class="settings-tab" data-tab="social">Réseaux sociaux</button>
+                </div>
+
+                <div class="settings-panel active" data-panel="general">
+                    <div class="settings-grid">
+                        <div class="form-group">
+                            <label>Nom de l'hôtel</label>
+                            <input type="text" id="setting-hotel_name" placeholder="Nom affiché">
+                        </div>
+                        <div class="form-group">
+                            <label>Slogan</label>
+                            <input type="text" id="setting-hotel_tagline" placeholder="Slogan">
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Description (section À Propos)</label>
+                            <textarea id="setting-hotel_description" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Monnaie</label>
+                            <input type="text" id="setting-currency" placeholder="FCFA">
+                        </div>
+                        <div class="form-group">
+                            <label>Check-in</label>
+                            <input type="time" id="setting-checkin_time">
+                        </div>
+                        <div class="form-group">
+                            <label>Check-out</label>
+                            <input type="time" id="setting-checkout_time">
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Logo (upload ou URL)</label>
+                            <div class="upload-zone-sm" id="logo-upload-zone">
+                                <span>📤 Cliquez ou glissez le logo ici</span>
+                            </div>
+                            <div class="upload-preview-strip" id="logo-upload-preview"></div>
+                            <input type="url" id="setting-logo" placeholder="https://... ou après upload, l'URL s'insère automatiquement" style="margin-top:0.5rem">
+                            <div class="preview-row" id="logo-preview-row">
+                                <img id="logo-preview" src="" alt="Logo preview" style="max-height:60px;border-radius:8px;display:none">
+                            </div>
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Image Hero (upload ou URL)</label>
+                            <div class="upload-zone-sm" id="hero-upload-zone">
+                                <span>📤 Cliquez ou glissez l'image hero ici</span>
+                            </div>
+                            <div class="upload-preview-strip" id="hero-upload-preview"></div>
+                            <input type="url" id="setting-hero_image" placeholder="https://...">
+                            <div class="preview-row">
+                                <img id="hero-preview" src="" alt="Hero preview" style="max-height:80px;border-radius:8px;object-fit:cover;width:100%;display:none;margin-top:0.5rem">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Titre Hero</label>
+                            <input type="text" id="setting-hero_title" placeholder="Titre principal">
+                        </div>
+                        <div class="form-group">
+                            <label>Sous-titre Hero</label>
+                            <input type="text" id="setting-hero_subtitle" placeholder="Sous-titre">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-panel" data-panel="contact">
+                    <div class="settings-grid">
+                        <div class="form-group full-width">
+                            <label>Adresse complète</label>
+                            <input type="text" id="setting-address" placeholder="Adresse">
+                        </div>
+                        <div class="form-group">
+                            <label>Téléphone 1</label>
+                            <input type="text" id="setting-phone1" placeholder="+225 ...">
+                        </div>
+                        <div class="form-group">
+                            <label>Téléphone 2</label>
+                            <input type="text" id="setting-phone2" placeholder="+225 ...">
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Email</label>
+                            <input type="email" id="setting-email" placeholder="contact@...">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-panel" data-panel="social">
+                    <div class="settings-grid">
+                        <div class="form-group">
+                            <label>Facebook</label>
+                            <input type="url" id="setting-facebook" placeholder="https://facebook.com/...">
+                        </div>
+                        <div class="form-group">
+                            <label>Instagram</label>
+                            <input type="url" id="setting-instagram" placeholder="https://instagram.com/...">
+                        </div>
+                        <div class="form-group">
+                            <label>WhatsApp (numéro sans +)</label>
+                            <input type="text" id="setting-whatsapp" placeholder="2250712345678">
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Google Maps URL</label>
+                            <input type="url" id="setting-google_maps" placeholder="https://maps.google.com/...">
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary save-settings-btn" onclick="saveSettings()">💾 Enregistrer les paramètres</button>
+            </section>
+
+            <!-- ──── CHAMBRES ──── -->
+            <section id="section-rooms" class="admin-section-page">
+                <div class="section-header">
+                    <h2 class="section-page-title">🏨 Chambres</h2>
+                    <button class="btn btn-primary" onclick="openRoomModal()">➕ Nouvelle chambre</button>
+                </div>
+                <div class="table-wrapper">
+                    <table class="admin-table" id="rooms-table">
+                        <thead><tr><th>Image</th><th>Nom</th><th>Type</th><th>Prix/nuit</th><th>Cap.</th><th>Statut</th><th>Photos</th><th>Actions</th></tr></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ──── RÉSERVATIONS ──── -->
+            <section id="section-reservations" class="admin-section-page">
+                <h2 class="section-page-title">📋 Réservations</h2>
+                <div class="table-wrapper">
+                    <table class="admin-table" id="reservations-table">
+                        <thead><tr><th>#</th><th>Client</th><th>Tél.</th><th>Chambre</th><th>Arrivée</th><th>Départ</th><th>Total</th><th>Statut</th><th>Actions</th></tr></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ──── GALERIE ──── -->
+            <section id="section-gallery" class="admin-section-page">
+                <div class="section-header">
+                    <h2 class="section-page-title">🖼️ Galerie</h2>
+                </div>
+
+                <!-- Zone d'upload principal -->
+                <div class="gallery-add-card">
+                    <h3>Ajouter des photos</h3>
+                    <div class="upload-zone-lg" id="gallery-upload-zone">
+                        <div class="upload-zone-icon">🖼️</div>
+                        <div class="upload-zone-text">Glissez-déposez vos photos ici<br><small>ou cliquez pour sélectionner (JPG, PNG, WebP)</small></div>
+                    </div>
+                    <div class="upload-preview-grid" id="gallery-upload-preview"></div>
+
+                    <div class="form-row" style="margin-top:1rem">
+                        <div class="form-group">
+                            <label>Titre</label>
+                            <input type="text" id="gallery-title" placeholder="Ex: Piscine de luxe">
+                        </div>
+                        <div class="form-group">
+                            <label>Catégorie</label>
+                            <select id="gallery-category">
+                                <option value="espaces">Espaces</option>
+                                <option value="restauration">Restauration</option>
+                                <option value="services">Services</option>
+                                <option value="chambres">Chambres</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="align-self:flex-end">
+                            <button class="btn btn-primary" onclick="saveGalleryUploads()">💾 Ajouter à la galerie</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Grille galerie existante -->
+                <div class="gallery-admin-grid" id="gallery-admin-grid"></div>
+            </section>
+
+            <!-- ──── SERVICES ──── -->
+            <section id="section-services" class="admin-section-page">
+                <div class="section-header">
+                    <h2 class="section-page-title">🛎️ Services</h2>
+                    <button class="btn btn-primary" onclick="openServiceModal()">➕ Nouveau service</button>
+                </div>
+                <div class="table-wrapper">
+                    <table class="admin-table" id="services-table">
+                        <thead><tr><th>Nom</th><th>Icône</th><th>Description</th><th>Prix</th><th>Actions</th></tr></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ──── COMMODITÉS ──── -->
+            <section id="section-amenities" class="admin-section-page">
+                <div class="section-header">
+                    <h2 class="section-page-title">✨ Commodités</h2>
+                    <button class="btn btn-primary" onclick="openAmenityModal()">➕ Nouvelle commodité</button>
+                </div>
+                <div class="table-wrapper">
+                    <table class="admin-table" id="amenities-table">
+                        <thead><tr><th>Icône</th><th>Nom</th><th>Description</th><th>Actions</th></tr></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ──── TÉMOIGNAGES ──── -->
+            <section id="section-testimonials" class="admin-section-page">
+                <h2 class="section-page-title">⭐ Témoignages</h2>
+                <div class="table-wrapper">
+                    <table class="admin-table" id="testimonials-table">
+                        <thead><tr><th>Client</th><th>Note</th><th>Commentaire</th><th>Date</th><th>Actions</th></tr></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ──── MESSAGES ──── -->
+            <section id="section-contacts" class="admin-section-page">
+                <h2 class="section-page-title">📨 Messages</h2>
+                <div class="table-wrapper">
+                    <table class="admin-table" id="contacts-table">
+                        <thead><tr><th>Nom</th><th>Email</th><th>Sujet</th><th>Message</th><th>Date</th><th>Actions</th></tr></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ──── NEWSLETTER ──── -->
+            <section id="section-newsletter" class="admin-section-page">
+                <h2 class="section-page-title">📧 Newsletter</h2>
+                <div class="table-wrapper">
+                    <table class="admin-table" id="newsletter-table">
+                        <thead><tr><th>Email</th><th>Date</th><th>Actions</th></tr></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+
+        </div><!-- /admin-content -->
+    </main>
+</div><!-- /admin-dashboard -->
+
+<!-- ════════════ MODAL CHAMBRE ════════════ -->
+<div class="modal-overlay" id="room-modal">
+    <div class="modal modal-lg">
+        <div class="modal-header">
+            <h3 class="modal-title" id="room-modal-title">Nouvelle chambre</h3>
+            <button class="modal-close" onclick="closeModal('room-modal')">×</button>
+        </div>
+        <div class="modal-body">
+            <form id="room-form">
+                <input type="hidden" id="room-id">
+                <div class="form-row">
+                    <div class="form-group" style="flex:2">
+                        <label>Nom *</label>
+                        <input type="text" id="room-name" required placeholder="ex: Suite Émeraude">
+                    </div>
+                    <div class="form-group">
+                        <label>Type *</label>
+                        <select id="room-type">
+                            <option>Standard</option><option>Deluxe</option><option>Suite</option><option>Studio</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Prix/nuit (FCFA) *</label>
+                        <input type="number" id="room-price" required placeholder="75000" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Capacité *</label>
+                        <input type="number" id="room-capacity" required placeholder="2" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label>Statut</label>
+                        <select id="room-status">
+                            <option value="available">Disponible</option>
+                            <option value="occupied">Occupée</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="room-desc" rows="2" placeholder="Description de la chambre..."></textarea>
+                </div>
+
+                <!-- Image principale -->
+                <div class="form-group">
+                    <label>📸 Image principale (vignette)</label>
+                    <div class="upload-zone-sm" id="room-main-upload-zone">
+                        <span>📤 Upload image principale</span>
+                    </div>
+                    <div class="upload-preview-strip" id="room-main-upload-preview"></div>
+                    <input type="url" id="room-image" placeholder="URL auto-remplie après upload, ou saisissez une URL">
+                    <div id="room-main-preview-img-wrap">
+                        <img id="room-main-preview-img" src="" alt="" style="max-height:60px;border-radius:8px;display:none;margin-top:0.5rem">
+                    </div>
+                </div>
+
+                <!-- Galerie photos -->
+                <div class="form-group">
+                    <label>🖼️ Galerie photos (photos supplémentaires)</label>
+                    <div class="upload-zone-lg" id="room-gallery-upload-zone">
+                        <div class="upload-zone-icon">📷</div>
+                        <div class="upload-zone-text">Glissez plusieurs photos ici<br><small>ou cliquez pour sélectionner</small></div>
+                    </div>
+                    <div class="upload-preview-grid" id="room-gallery-upload-preview"></div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('room-modal')">Annuler</button>
+                    <button type="submit" class="btn btn-primary">💾 Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ════════════ MODAL GALERIE EDIT ════════════ -->
+<div class="modal-overlay" id="gallery-edit-modal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3 class="modal-title">Modifier la photo</h3>
+            <button class="modal-close" onclick="closeModal('gallery-edit-modal')">×</button>
+        </div>
+        <div class="modal-body">
+            <input type="hidden" id="gallery-edit-id">
+            <div class="form-group">
+                <label>Nouvelle image (upload)</label>
+                <div class="upload-zone-sm" id="gallery-edit-upload-zone">
+                    <span>📤 Upload nouvelle image</span>
+                </div>
+                <div class="upload-preview-strip" id="gallery-edit-upload-preview"></div>
+                <input type="url" id="gallery-edit-image" placeholder="URL auto-remplie ou saisir manuellement" style="margin-top:0.5rem">
+                <img id="gallery-edit-preview" src="" alt="" style="max-height:80px;border-radius:8px;object-fit:cover;width:100%;display:none;margin-top:0.5rem">
+            </div>
+            <div class="form-group">
+                <label>Titre</label>
+                <input type="text" id="gallery-edit-title" placeholder="Titre">
+            </div>
+            <div class="form-group">
+                <label>Catégorie</label>
+                <select id="gallery-edit-category">
+                    <option value="espaces">Espaces</option>
+                    <option value="restauration">Restauration</option>
+                    <option value="services">Services</option>
+                    <option value="chambres">Chambres</option>
+                </select>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeModal('gallery-edit-modal')">Annuler</button>
+                <button class="btn btn-primary" onclick="saveGalleryEdit()">💾 Enregistrer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ════════════ MODAL SERVICE ════════════ -->
+<div class="modal-overlay" id="service-modal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3 class="modal-title" id="service-modal-title">Nouveau service</h3>
+            <button class="modal-close" onclick="closeModal('service-modal')">×</button>
+        </div>
+        <div class="modal-body">
+            <input type="hidden" id="service-id">
+            <div class="form-group">
+                <label>Nom *</label>
+                <input type="text" id="service-name" required placeholder="Ex: Navette Aéroport">
+            </div>
+            <div class="form-group">
+                <label>Icône (nom)</label>
+                <input type="text" id="service-icon" placeholder="plane, car, map, shirt, baby, presentation">
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea id="service-desc" rows="2" placeholder="Description du service..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>Prix</label>
+                <input type="text" id="service-price" placeholder="25 000 FCFA">
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeModal('service-modal')">Annuler</button>
+                <button class="btn btn-primary" onclick="saveService()">💾 Enregistrer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ════════════ MODAL COMMODITÉ ════════════ -->
+<div class="modal-overlay" id="amenity-modal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3 class="modal-title" id="amenity-modal-title">Nouvelle commodité</h3>
+            <button class="modal-close" onclick="closeModal('amenity-modal')">×</button>
+        </div>
+        <div class="modal-body">
+            <input type="hidden" id="amenity-id">
+            <div class="form-group">
+                <label>Nom *</label>
+                <input type="text" id="amenity-name" required placeholder="Ex: Wi-Fi Haut Débit">
+            </div>
+            <div class="form-group">
+                <label>Icône (nom)</label>
+                <input type="text" id="amenity-icon" placeholder="wifi, snowflake, water, car, coffee, tv, lock">
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea id="amenity-desc" rows="2" placeholder="Description..."></textarea>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeModal('amenity-modal')">Annuler</button>
+                <button class="btn btn-primary" onclick="saveAmenity()">💾 Enregistrer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ════════════ MODAL CONFIRMATION ════════════ -->
+<div class="modal-overlay" id="confirm-modal">
+    <div class="modal modal-sm">
+        <div class="modal-body" style="text-align:center;padding:2rem">
+            <div style="font-size:3rem;margin-bottom:1rem">⚠️</div>
+            <h3 id="confirm-message" style="margin-bottom:1.5rem">Confirmer ?</h3>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeModal('confirm-modal')">Annuler</button>
+                <button class="btn btn-primary" id="confirm-yes-btn">Confirmer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/admin.js"></script>
+</body>
+</html>

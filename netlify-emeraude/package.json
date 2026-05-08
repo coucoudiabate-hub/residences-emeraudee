@@ -1,0 +1,20 @@
+{
+  "name": "residences-emeraude-netlify",
+  "version": "2.0.0",
+  "description": "Les Résidences d'Émeraude Chez Bodoro — Netlify deployment",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@netlify/functions": "^2.4.0",
+    "@supabase/supabase-js": "^2.39.0",
+    "cloudinary": "^2.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "busboy": "^1.6.0"
+  },
+  "scripts": {
+    "dev": "netlify dev",
+    "build": "echo 'No build step — static site'"
+  }
+}
