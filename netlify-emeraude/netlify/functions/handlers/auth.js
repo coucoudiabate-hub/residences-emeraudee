@@ -1,32 +1,31 @@
-// netlify/functions/handlers/auth.js
 import { ok, err, signToken, verifyToken } from '../_shared/db.js';
 
-export async function handleAuth({ method, id: resource, event, body, headers }) {
-  // Récupérer le nom de la ressource depuis l'URL
-  const path = event.path.replace(/^\/.netlify\/functions\/api\/?/, '');
-  const endpoint = path.split('/')[0];
+const ADMIN_USER = process.env.ADMIN_USERNAME ?? 'bodoro2026';
+const ADMIN_PASS = process.env.ADMIN_PASSWORD ?? 'Emeraude@2026!';
 
-  // POST /api/login
+export async function handleAuth({ method, event, body, headers }) {
+  const fullPath = event.path || '';
+  const endpoint = fullPath
+    .replace(/^\/.netlify\/functions\/api/, '')
+    .replace(/^\/api/, '')
+    .replace(/^\/+/, '')
+    .split('/')[0];
+
   if (endpoint === 'login' && method === 'POST') {
-    const { username, password } = body;
-    const expectedUser = process.env.ADMIN_USERNAME || 'admin';
-    const expectedPass = process.env.ADMIN_PASSWORD || 'emeraude2026';
-
-    if (username === expectedUser && password === expectedPass) {
-      const token = signToken();
-      return ok({ success: true, token });
+    const { username = '', password = '' } = body || {};
+    if (username === ADMIN_USER && password === ADMIN_PASS) {
+      return ok({ success: true, token: signToken() });
     }
     return err('Identifiants incorrects', 401);
   }
 
-  // POST /api/logout
   if (endpoint === 'logout' && method === 'POST') {
     return ok({ success: true });
   }
 
-  // GET /api/check-auth
-  if (endpoint === 'check-auth' && method === 'GET') {
-    const payload = verifyToken(headers['authorization'] || headers['Authorization'] || '');
+  if (endpoint === 'check-auth') {
+    const auth = headers['authorization'] || headers['Authorization'] || '';
+    const payload = verifyToken(auth);
     if (payload) return ok({ authenticated: true });
     return err('Non authentifié', 401);
   }
